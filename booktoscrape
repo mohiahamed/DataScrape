@@ -1,0 +1,164 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyP+wV0KLsw3R0r3Ina0NQY0",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/mohiahamed/DataScrape/blob/main/booktoscrape\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Import required libraries\n",
+        "import requests\n",
+        "from bs4 import BeautifulSoup\n",
+        "import pandas as pd"
+      ],
+      "metadata": {
+        "id": "F3xi-p6Rr5eD"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Send GET request to website\n",
+        "response = requests.get('http://books.toscrape.com/')\n"
+      ],
+      "metadata": {
+        "id": "5oUOoLgGr846"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Parse HTML content\n",
+        "soup = BeautifulSoup(response.content, 'html.parser')"
+      ],
+      "metadata": {
+        "id": "Ts_1aDbor8lC"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Extract data\n",
+        "books = []\n",
+        "for article in soup.select('article.product_pod'):\n",
+        "    name = article.h3.a['title']\n",
+        "    price = article.select('p.price_color')[0].get_text()\n",
+        "    availability = article.select('p.availability')[0].get_text().strip()\n",
+        "    books.append({'name': name, 'price': price, 'availability': availability})\n"
+      ],
+      "metadata": {
+        "id": "LgEkenJZsELs"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Create DataFrame\n",
+        "df = pd.DataFrame(books)\n"
+      ],
+      "metadata": {
+        "id": "FqR3PPGhsEUC"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Export Dataframe\n",
+        "df.to_csv(\"books.csv\", index=False)\n",
+        "df.to_json(\"books.json\")"
+      ],
+      "metadata": {
+        "id": "3hLNCg2dsEYC"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "o4boESEPsEb2"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "o0Ryx-wRsEga"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "Qa3Kf508r8gi"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "JAgEb_4Ur8FS"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "JkKuUvscrhSn"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "rXrV4GbZrt8c"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
